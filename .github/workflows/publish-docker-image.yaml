@@ -1,0 +1,35 @@
+name: Publish HA2CS image
+
+on:
+  push:
+    branches:
+      - main
+
+  schedule:
+    - cron: 0 0 * * 0
+
+  workflow_dispatch:
+
+jobs:
+  build-publish-image:
+    name: Build and publish H2CS docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get commit short hash
+        run: echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: hackl0us/ha2cs:latest,hackl0us/ha2cs:${{ env.short_sha }}
+
+

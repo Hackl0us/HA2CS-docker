@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+
+/bin/rm -f /config/home-assistant_v2.*

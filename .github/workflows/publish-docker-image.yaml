@@ -17,8 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get commit short hash
-        run: echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
+#      - name: Get commit short hash
+#        run: echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
+
+      - name: Generate Docker image tag
+        run: echo "image_tag=$(date "+%Y_%m_%d-%H_%M_%S")" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -37,6 +40,6 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackl0us/ha2cs:latest,hackl0us/ha2cs:${{ env.short_sha }}
+          tags: hackl0us/ha2cs:latest,hackl0us/ha2cs:${{ env.image_tag }}
 
 

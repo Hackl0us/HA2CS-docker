@@ -1,0 +1,16 @@
+#!/bin/bash
+
+RES_PATH="/mnt/custom_components"
+COMPONENT_PATH="/config/custom_components"
+
+mkdir $COMPONENT_PATH
+
+if [ ! -d $COMPONENT_PATH/hacs ]; then
+  cp -rp $RES_PATH/hacs $COMPONENT_PATH
+fi
+
+if [ ! -d $COMPONENT_PATH/xiaomi_miot_raw ]; then
+  cp -rp $RES_PATH/xiaomi_miot_raw $COMPONENT_PATH
+fi
+
+exit 0
